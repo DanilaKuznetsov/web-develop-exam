@@ -23,7 +23,7 @@
                 <form method="POST" enctype="multipart/form-data">
                     {{ form_field('title', 'Название', value=book.title if book else form_data.get('title') if form_data else '') }}
                     
-                    {{ form_field('short_desc', 'Краткое описание (Markdown)', multiline=True, value=book.short_desc if book else form_data.get('short_desc') if form_data else '') }}
+                    {{ form_field('short_desc', 'Краткое описание (Markdown)', multiline=True, required=False, value=book.short_desc if book else form_data.get('short_desc') if form_data else '') }}
                     
                     <div class="row">
                         <div class="col-md-4">
