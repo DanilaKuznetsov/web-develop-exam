@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
-{% macro form_field(name, label, type='text', value='', required=True, multiline=False) %}
+{% macro form_field(name, label, type='text', value='', required=True, multiline=False, min=None, max=None) %}
 <div class="mb-3">
     <label for="{{ name }}" class="form-label">{{ label }}</label>
     {% if multiline %}
     <textarea class="form-control" id="{{ name }}" name="{{ name }}" {% if required %}required{% endif %}>{{ value }}</textarea>
     {% else %}
-    <input type="{{ type }}" class="form-control" id="{{ name }}" name="{{ name }}" value="{{ value }}" {% if required %}required{% endif %}>
+    <input type="{{ type }}" class="form-control" id="{{ name }}" name="{{ name }}" value="{{ value }}" {% if required %}required{% endif %} {% if min %}min="{{ min }}"{% endif %} {% if max %}max="{{ max }}"{% endif %}>
     {% endif %}
 </div>
 {% endmacro %}
@@ -27,7 +27,7 @@
                     
                     <div class="row">
                         <div class="col-md-4">
-                            {{ form_field('year', 'Год', type='number', value=book.year if book else form_data.get('year') if form_data else '') }}
+                            {{ form_field('year', 'Год', type='number', min='1901', max='2155', value=book.year if book else form_data.get('year') if form_data else '') }}
                         </div>
                         <div class="col-md-8">
                             {{ form_field('publisher', 'Издательство', value=book.publisher if book else form_data.get('publisher') if form_data else '') }}

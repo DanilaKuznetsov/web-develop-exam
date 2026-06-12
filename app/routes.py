@@ -110,7 +110,16 @@ def add_book():
 
         if not all([title, short_desc, year, publisher, author, pages, genre_ids, cover_file]):
             flash('Все поля обязательны для заполнения', 'danger')
-            return render_template('book/form.html', genres=genres, is_edit=False)
+            return render_template('book/form.html', genres=genres, is_edit=False, form_data=request.form)
+            
+        try:
+            year_int = int(year)
+            if year_int < 1901 or year_int > 2155:
+                flash('Год издания должен быть от 1901 до 2155 (из-за ограничений типа YEAR в MySQL).', 'warning')
+                return render_template('book/form.html', genres=genres, is_edit=False, form_data=request.form)
+        except ValueError:
+            flash('Год должен быть числом.', 'danger')
+            return render_template('book/form.html', genres=genres, is_edit=False, form_data=request.form)
             
         short_desc_sanitized = sanitize_html(short_desc)
 
@@ -180,6 +189,15 @@ def edit_book(book_id):
         book.author = request.form.get('author')
         book.pages = request.form.get('pages')
         genre_ids = request.form.getlist('genres')
+
+        try:
+            year_int = int(book.year)
+            if year_int < 1901 or year_int > 2155:
+                flash('Год издания должен быть от 1901 до 2155 (из-за ограничений типа YEAR в MySQL).', 'warning')
+                return render_template('book/form.html', book=book, genres=genres, is_edit=True)
+        except ValueError:
+            flash('Год должен быть числом.', 'danger')
+            return render_template('book/form.html', book=book, genres=genres, is_edit=True)
 
         try:
             book.genres = []
