@@ -1,0 +1,10 @@
+meta:
+  environment: python
+  toolchain:
+    name: pip
+    version: 3.10
+build:
+  requirementsPath: requirements.txt
+run:
+  persistenceMount: /app/app/static/uploads
+  scriptName: gunicorn -w 2 -b 0.0.0.0:80 run:app
