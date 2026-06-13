@@ -3,7 +3,7 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import sqlalchemy as sa
-from sqlalchemy.dialects.mysql import YEAR
+
 
 # Таблица связи многие-ко-многим для Книг и Жанров
 book_genres = db.Table('book_genres',
@@ -62,7 +62,7 @@ class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     short_desc = db.Column(db.Text, nullable=False)
-    year = db.Column(YEAR, nullable=False)
+    year = db.Column(db.Integer, nullable=False)
     publisher = db.Column(db.String(100), nullable=False)
     author = db.Column(db.String(100), nullable=False)
     pages = db.Column(db.Integer, nullable=False)
