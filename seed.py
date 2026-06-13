@@ -4,6 +4,8 @@ from app.models import Role, User, Genre
 app = create_app()
 
 with app.app_context():
+    db.create_all()
+    
     # Создание ролей
     roles = [
         {'name': 'Администратор', 'description': 'Суперпользователь, имеет полный доступ к системе, в том числе к созданию и удалению книг'},
